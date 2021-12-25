@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>懒加载</title>
+    <style>
+        *, body, html {
+            margin: 0;
+            padding: 0;
+        }
+        .scroll-view {
+            padding: 30px;
+            height: 600px;
+            overflow: auto;
+        }
+        .img {
+            width: 100%;
+            height: 300px;
+            vertical-align: middle;
+            background-color: #f00;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-view"></div>
+    <script>
+        let arr = [1,2,3,4,5,6];
+        let scrollView = document.getElementsByClassName('scroll-view')[0];
+        let html = '';
+        arr.forEach(item => {
+            html += `<img class="img" data-src="./img/${item}.jpg">`
+        })
+        scrollView.innerHTML = html;
+
+        let imgs = document.getElementsByClassName('img')
+        scrollEvent(imgs)
+        let fn = throttle(scrollEvent, 1000);
+        console.log(fn)
+        scrollView.addEventListener('scroll', throttle(function () {
+            scrollEvent(imgs)
+        }, 1000))
+
+        function scrollEvent(imgs) {
+            console.log('监听滚动')
+            // 容器的高度
+            const clientHeight = scrollView ? scrollView.clientHeight : 0;
+            // 容器滚动的距离
+            const scrollTop = scrollView ? scrollView.scrollTop : 0;
+            for(let img of imgs) {
+                if(!img.dataset.src) continue;
+                if(img.src) continue;
+                // 当前img进入容器可见区域中
+                if(clientHeight + scrollTop > img.offsetTop) {
+                    img.src = img.dataset.src || '';
+                    img.removeAttribute('data-src')
+                }
+            }
+        }
+
+        /*function throttle(fn, imgs) {
+            if(!timer) {
+                fn(imgs)
+                timer = true
+            }
+            setTimeout(() => {
+                timer = false
+            }, 500)
+        }*/
+
+        function throttle(fn, wait) {
+            let previous = 0;
+            let timer = null;
+            return function (...args) {
+                if(Date.now() - previous > wait) {
+                    clearTimeout(timer)
+                    timer = null;
+                    previous = Date.now();
+                    fn.apply(this, args)
+                }
+                else if(!timer) {
+                    timer = setTimeout(() => {
+                        timer = null;
+                        console.log(timer)
+                        fn.apply(this, args)
+                    }, wait)
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

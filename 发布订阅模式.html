@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布订阅模式</title>
+</head>
+<body>
+
+<script>
+    // 事件处理中心
+    class EventLister {
+        constructor() {
+            this.subs = Object.create(null)
+        }
+
+        // 注册事件  订阅者
+        $on(eventType, handle) {
+            this.subs[eventType] = this.subs[eventType] || [];
+            this.subs[eventType].push(handle)
+        }
+
+        // 触发事件  发布者
+        $emit(eventType) {
+            if(this.subs[eventType]) {
+                this.subs[eventType].forEach(handle => {
+                    handle()
+                })
+            }
+        }
+    }
+
+    // 测试
+    let vm = new EventLister();
+    function handle() {
+        console.log('click')
+    }
+    function handle2() {
+        console.log('click2')
+    }
+    function handle3() {
+        console.log('click3')
+    }
+    function handleChange() {
+        console.log('change')
+    }
+    vm.$on('click', handle);
+    vm.$on('click', handle2);
+    vm.$on('click', handle3);
+    vm.$on('change', handleChange);
+
+    vm.$emit('click')
+    vm.$emit('change')
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>async</title>
+</head>
+<body>
+
+<script>
+    function getStockSymbol() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('getStockSymbol')
+            }, 2000)
+        })
+
+    }
+    function getStockPrice() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('getStockPrice')
+            }, 3000)
+        })
+    }
+    async function getPrice() {
+        var getStockSymbol2 = await getStockSymbol();
+        var getStockPrice2 = await getStockPrice();
+        console.log('await执行完成了')
+        return getStockPrice2;
+    }
+    getPrice().then(res => {
+        console.log(res)
+    })
+
+    async function fn() {
+        try {
+            await Promise.reject('出错了')
+        } catch (e) {
+            console.log(e)
+        }
+        await Promise.reject('出错了2').catch(e => {
+            console.log(e)
+        })
+
+        return  await Promise.resolve('456')
+    }
+    fn().then(res => {
+        console.log(res)
+    })
+</script>
+</body>
+</html>

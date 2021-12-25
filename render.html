@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插入十万条数据</title>
+</head>
+<body>
+
+<ul id="ul"></ul>
+
+<script>
+    let html = ''
+    for(let i = 0; i < 100000; i++) {
+        let li = `<li>我在测试${i}</li>`
+        html += li;
+
+    }
+    document.getElementById('ul').innerHTML = html
+</script>
+</body>
+</html>

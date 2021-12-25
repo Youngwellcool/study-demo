@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>继承</title>
+</head>
+<body>
+
+<script>
+    /*
+    *   1、原型链继承
+        2、借助构造函数继承（经典继承）
+        3、组合继承：原型链 + 借用构造函数（最常用）
+        4、原型式继承 （Object.create）
+        5、寄生式继承
+        6、寄生组合式继承（最理想）
+        7、ES6中的继承
+    * */
+
+    /**
+     * @name: TODO 原型链继承：子类型的原型为父类型的一个实例对象
+     * @description:
+     * 特点： 父类新增在构造函数上面的方法，子类都能访问到
+     # 缺点：1、来自原型对象的所有属性被所有实例共享，child1修改 colors 会影响child2的 colors 2、创建子类实例时，无法向父类的构造函数传参
+     * @author: Youngwell
+     * @time: 2021-10-08 17:24:10
+     * @param
+     */
+    function Parent1(name, age) {
+        this.name = name || 'Youngwell';
+        this.age = age || 30;
+        this.color = ['yellow','red','green'];
+    }
+    Parent1.prototype.getName = function () {
+        console.log(this.name)
+    }
+    function Child1() {
+        this.subName = 'childYoungwell'
+    }
+    // 核心代码
+    Child1.prototype = new Parent1()
+
+    var childA = new Child1();
+    var childB = new Child1();
+    childA.color.push('black') // 来自原型对象的所有属性被所有实例共享，child1修改 colors 会影响child2的 colors
+    console.log(childA.color) // ['yellow','red','green','black']
+    console.log(childB.color) // ['yellow','red','green','black']
+
+    // 父类新增在构造函数上面的方法，子类都能访问到
+    Parent1.prototype.getAge = function () {
+        console.log(this.age)
+    }
+    Parent1.prototype.type = 'Parent'
+    childA.getAge() // 30
+
+
+    /***********************分割线******************************/
+
+    /**
+     * @name: TODO 借助构造函数继承（经典继承）
+     * @description: 在子类构造函数中使用call或apply调用父类构造函数
+     * 特点： 1、避免了引用类型的属性被所有实例共享   2、创建子类实例时，可以向父类传参了
+     * 缺点： 1、只能继承父类自有的属性和方法，不能继承父类原型上的属性和方法  2、无法实现函数复用，每次创建实例时都会创建一遍方法，影响性能
+     * @author: Youngwell
+     * @time: 2021-10-09 10:09:51
+     * @param
+     */
+    function Child2(name, age, height) {
+        // 核心代码
+        Parent1.call(this, name, age)
+
+        this.height = height;
+        this.say = function () {
+            console.log(`I am ${this.name}`)
+        }
+    }
+
+    // 创建子类实例时，可以向父类传参了
+    var childC = new Child2('childC', 31, 173)
+    var childD = new Child2('childD', 27, 183)
+
+    // 避免了引用类型的属性被所有实例共享
+    childC.color.push('pink')
+    console.log(childC.color) // ['yellow','red','green','pink']
+    console.log(childD.color) // ['yellow','red','green'] childD的color属性不受影响
+
+    // childC.getName() // 只能继承父类自有的属性和方法，不能继承父类原型上的属性和方法  Uncaught TypeError: childC.getName is not a function
+
+
+    /***********************分割线******************************/
+
+    /**
+     * @name: TODO 原型链 + 构造函数 （最常用）
+     * @description:
+     * 特点： 融合了原型链继承和借用构造函数的优点，称为JavaScript中最常用的继承模式
+     * 缺点：调用了两次Parent1构造函数，多构造一次就多进行了一次性能开销
+     * @author: Youngwell
+     * @time: 2021-10-09 14:36:27
+     * @param
+     */
+    function Child3(name, age, height) {
+        // 核心代码1  第二次调用Parent1
+        Parent1.call(this, name, age)
+        this.height = height;
+        this.say = function () {
+            console.log(`I am ${this.name}`)
+        }
+    }
+    // 核心代码2  第一次调用Parent1
+    Child3.prototype = new Parent1()
+    Child3.prototype.constructor = Child3
+
+    var childE = new Child3('childE', 20, 165)
+    var childF = new Child3('childF', 18, 175)
+
+    childE.color.push('blue')
+    console.log(childE.color)  // ["yellow", "red", "green", "blue"]
+    console.log(childF.color)  // ["yellow", "red", "green"]
+
+    childE.getName()
+    childF.getAge()
+
+    /***********************分割线******************************/
+
+    /**
+     * @name: TODO 原型式继承 Object.create
+     * @description:
+     * 缺点：1、来自原型对象的所有属性被所有实例共享，p1修改 color 会影响p2的 color
+     * @author: Youngwell
+     * @time: 2021-10-09 16:26:17
+     * @param
+     */
+    var person = {
+        name: 'Youngwell',
+        age: 30,
+        color: ['red', 'yellow', 'blue'],
+        getName: function () {
+            return this.name
+        }
+    }
+
+    // 核心代码  p1和p2就继承了person的所有属性和方法
+    var p1 = Object.create(person)
+    var p2 = Object.create(person)
+
+    p1.color.push('pink')
+    console.log(p1.color) // ["red", "yellow", "blue", "pink"]
+    console.log(p2.color) // ["red", "yellow", "blue", "pink"]
+    console.log(person.color) // ["red", "yellow", "blue", "pink"]
+
+    /***********************分割线******************************/
+
+    /**
+     * @name: TODO 寄生组合式继承（最理想的）
+     * @description: 将继承方式3（原型链+构造函数）改造，优化继承方式3的缺点，使父构造函数Parent1只需调用一次
+     * @author: Youngwell
+     * @time: 2021-10-13 09:26:59
+     * @param
+     */
+    function  Child4(name, age, height) {
+        // 核心代码1
+        Parent1.call(this, name, age)
+        this.height = height;
+    }
+    // 核心代码2
+    // 不能直接使用 Child.prototype = Parent.prototype来实现，因为会出现一些副作用，你可能在修改 Child.prototype 的时候会修改Parent.prototype
+    Child4.prototype = Object.create(Parent1.prototype)
+    Child4.prototype.constructor = Child4;
+
+    var childP = new Child4('yww', 18, 180)
+    var childQ = new Child4('wwy', 14, 165)
+
+    /***********************分割线******************************/
+
+    /**
+     * @name: TODO ES6中的class继承
+     * @description: class关键字只是原型的语法糖，JavaScript继承仍然是基于原型实现的
+     * @author: Youngwell
+     * @time: 2021-10-13 09:26:59
+     * @param
+     */
+    class Parent2 {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+            this.color = ['red', 'yellow', 'blue']
+        }
+        say() {
+            console.log(this.name)
+        }
+    }
+    class childP extends Parent2 {
+        constructor(name, age) {
+            // 调用父类的constructor(name, age)
+            super(name, age)
+            this.num = [1,2,3,4]
+        }
+        toString() {
+            return this.color + ' ' + super.toString()   // 调用父类的toString()
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>new做了什么</title>
+</head>
+<body>
+
+<script>
+    /**
+     * 手写一个new
+     * @param constructor 构造函数
+     * @param arg 传入构造函数的参数
+     * @returns {*}
+     * @private
+     */
+
+    function _new(constructor, ...arg) {
+        // 1、创建一个空对象
+        const obj = {};
+        // 2、将空对象的原型指向构造函数的原型
+        obj.__proto__ = constructor.prototype;
+        // 3、执行构造函数，并将构造函数中的this指向obj，为obj添加属性和方法，如果构造函数执行有返回值，用result接收
+        const result = constructor.apply(obj, arg);  // {name: 'dfasf', fd: 54654} / undefined
+        // 4、判断构造函数执行返回值是否是对象，如果是，就返回这个对象，如果不是就返回新创建的对象obj
+        return typeof result === 'object' ? result : obj
+    }
+
+    function Foo(name) {
+        this.name = name;
+        this.age = 30;
+        this.height = 173;
+        this.say = function () {
+            console.log('Hello')
+        }
+        // return {name: 'dfasf', fd: 54654}
+    }
+    var obj2 = _new(Foo, 'Youngwell');
+    console.log(obj2)  // { name: "Youngwell", age: 30, height: 173, say: function () {console.log('Hello')} }
+</script>
+</body>
+</html>

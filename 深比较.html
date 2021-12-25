@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>深比较</title>
+</head>
+<body>
+
+<script>
+    /**
+     * 深比较会检查两个对象的所有属性是否都相等，需要用递归的方式遍历两个对象的所有属性，不管对象是不是同一对象的引用
+     * @param x
+     * @param y
+     * @returns {boolean|boolean|(boolean|undefined)}
+     */
+    const deepEqual = function (x, y) {
+        debugger
+        // 判断是否指向同一内存
+        if(x === y) {
+            return true
+        }
+        // 判断是否都为对象
+        if(typeof x === 'object' && x != null && typeof y === 'object' && y != null) {
+            // 判断属性个数是否相等
+            if(Object.keys(x).length != Object.keys(y).length) {
+                return false
+            }
+            // 遍历x 注意：遍历过程中没有遇到false不能跳出遍历，要完整遍历完所有属性
+            for(let prop in x) {
+                console.log(prop)
+                // 判断y中是否有x中的属性prop，如果有递归比较该属性prop的值
+                if(y.hasOwnProperty(prop)) {
+                    if(!deepEqual(x[prop], y[prop])) {
+                        return false
+                    }
+
+                    /*TODO 遍历中不能return true，比如不能如下return，因为如果return true了则会跳出deepEqual函数，会存在两个对象前面的属性相等，后面的属性不等，导致遍历到前面相等的属性就跳出函数了，从而没有遍历完整*/
+                    // return deepEqual(x[prop], y[prop])
+                }else {
+                    return false
+                }
+            }
+            // TODO 遍历完后没有返回false 则返回true
+            return true
+        }else {
+            // 不是对象 且 不 === 直接返回false
+            return false
+        }
+    }
+
+
+    // 测试
+    var a = {
+        name: 'Youngwell',
+        age: 30
+    }
+    var b = {
+        name: 'Youngwell',
+        age2: 30,
+    }
+    var c = {
+        name: {p: 10},
+        age: 30
+    }
+    var d = {
+        name: {p: 10},
+        age: 30
+    }
+    console.log(deepEqual(a, b))
+
+    /*console.log(deepEqual(a, c))
+    console.log(deepEqual(d, c))*/
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IntersectionObserver API</title>
+    <style>
+        img {
+            display: block;
+            height: 300px;
+            width: 100%;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img data-src="https://t8.baidu.com/it/u=3571592872,3353494284&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=ce92b3a15896280d9ae7f00333f93360">
+        <img data-src="https://t7.baidu.com/it/u=3616242789,1098670747&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=6e3f45fbca2c5486c4ae84458c5c50c8">
+        <img data-src="https://t8.baidu.com/it/u=1484500186,1503043093&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=355aa7b0dc62612d25dc8962f2366c87">
+        <img data-src="https://t8.baidu.com/it/u=2247852322,986532796&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=8ddc3447e1ce5bb82eff560015bfe14a">
+        <img data-src="https://t7.baidu.com/it/u=3204887199,3790688592&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=1a82f1d0210a1c1d49ca0f01a4d80840">
+        <img data-src="https://t7.baidu.com/it/u=3225540498,2642373837&fm=79&app=86&size=h300&n=0&g=4n&f=jpeg?sec=1599728667&t=54cf1c9ad7c6322669b1bdafc7acbf12">
+    </div>
+
+    <script>
+        var io = new IntersectionObserver(entries => {
+            console.log(entries)
+            entries.forEach(item => {
+                if(item.intersectionRatio > 0) {
+                    let img = item.target;
+                    img.src = img.getAttribute('data-src')
+                    io.unobserve(img)
+                }
+            })
+        })
+        var imgList = [...document.getElementsByTagName('img')]
+        imgList.forEach(item => {
+            io.observe(item)
+        })
+    </script>
+</body>
+</html>

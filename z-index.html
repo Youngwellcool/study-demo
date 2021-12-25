@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .p1 {
+            position: relative;
+            z-index: 100;
+        }
+        .p1c1, .p1c2, .p2c1, .p2c2 {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            z-index: 200;
+            color: #000;
+            background-color: blue;
+        }
+        .p1c2 {
+            background-color: yellow;
+            top: 60px;
+            left: 50px;
+            z-index: 210;
+        }
+
+        .p2 {
+            position: relative;
+            z-index: 200;
+        }
+        .p2c1 {
+            background-color: red;
+            top: 160px;
+            left: 150px;
+            z-index: 210;
+        }
+        .p2c2 {
+            background-color: gray;
+            top: 260px;
+            left: 50px;
+            z-index: 210;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="p1">
+    <div class="p1c1">p1c1</div>
+    <div class="p1c2">p1c2</div>
+</div>
+<div class="p2">
+    <div class="p2c1">p2c1</div>
+    <div class="p2c2">p2c2</div>
+</div>
+</body>
+</html>

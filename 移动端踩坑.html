@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>Title</title>
+    <style>
+        /*若以iPad Pro分辨率1024px为移动端和桌面端的断点，还可结合媒体查询做断点处理。1024px以下使用rem布局，否则不使用rem布局。可以完全替换flexable 那个插件*/
+        @media screen and (max-width: 1024px) {
+            html {
+                font-size: calc(100vw / 7.5);
+            }
+        }
+
+        * {
+            user-select: none; /* 禁止长按选择文字 */
+            -webkit-touch-callout: none;
+            text-size-adjust: 100%;
+
+            white-space: pre-line;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            appearance: none;
+            /* 自定义样式 */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 0.24rem;
+        }
+        .wrap {
+            padding: 15px;
+        }
+
+        /* 横屏 */
+        @media all and (orientation: landscape) {
+            /* 自定义样式 */
+            body {
+                background: #ddd;
+            }
+        }
+
+        /*滚动条整体部分*/
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            background-color: transparent;
+        }
+        /*滚动条轨道部分*/
+        ::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+        /*滚动条滑块部分*/
+        ::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-image: linear-gradient(135deg, #09f, #3c9);
+        }
+
+        input {
+            height: 40px;
+            /*line-height: 40px;*/
+            font-size: 26px;
+            /*line-height: normal;*/
+        }
+
+        /*input placeholder样式*/
+        input::-webkit-input-placeholder {
+            color: #00f;
+            font-size: 30px;
+        }
+
+        .label {
+            position: relative;
+            width: 200px;
+            height: 80px;
+            /*border: 1px solid #00f;*/
+        }
+        /*TODO 1px边框*/
+        .label:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid #00f;
+            width: 200%;
+            height: 200%;
+            content: '';
+            transform: scale(.5);
+            transform-origin: left top;
+        }
+
+        body.static {
+            position: fixed;
+            left: 0;
+            width: 100%;
+        }
+        .modal {
+            position: fixed;
+            display: none;
+            top: 20%;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            overflow-y: scroll;
+            padding: 15px;
+            box-shadow: 0 0 10px #ddd;
+            background: #fff;
+            border-radius: 6px;
+        }
+        .modal.show {
+            display: block;
+        }
+
+    </style>
+    <!--<script>
+        function AutoResponse(width = 750) {
+            const target = document.documentElement;
+            if (target.clientWidth >= 600) {
+                target.style.fontSize = "80px";
+            } else {
+                target.style.fontSize = target.clientWidth / width * 100 + "px";
+            }
+        }
+        AutoResponse();
+        window.addEventListener("resize", () => AutoResponse());
+    </script>-->
+    <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+</head>
+<body>
+<video id="video"></video>
+
+<div class="wrap">
+    <h1>1、调用系统能力</h1>
+    <a href="tel:10010">打电话给10010小姐姐</a>
+    <br>
+    <a href="sms:10010">发送短信给10010小姐姐</a>
+    <br>
+    <a href="mailto:754052841@qq.com">发送邮件给754052841</a>
+    <br>
+
+    <!--选择照片或拍摄照片-->
+    <h3>选择照片或拍摄照片</h3>
+    <input type="file" accept="image/*">
+
+    <!--选择视频或拍摄视频-->
+    <h3>选择视频或拍摄视频</h3>
+    <input type="file" accept="video/*">
+
+    <!--多选文件-->
+    <h3>多选文件</h3>
+    <input type="file" multiple>
+</div>
+<hr>
+<button id="open">打开弹框</button>
+
+<div class="wrap">
+    <h1>2、弹出数字键盘</h1>
+    <!-- 纯数字带#和* -->
+    <h3>纯数字带#和*</h3>
+    <input type="tel">
+    <br>
+    <!--纯数字-->
+    <h3>纯数字</h3>
+    <input placeholder="纯数字" type="number" pattern="\d*">
+</div>
+<hr>
+<div class="wrap">
+    <h1>3、打开原生应用</h1>
+    <!--打开微信-->
+    <a href="weixin://">打开微信</a>
+    <br>
+    <a href="alipays://">打开支付宝</a>
+    <br>
+    <!-- 打开支付宝的扫一扫 -->
+    <a href="alipays://platformapi/startapp?saId=10000007">打开支付宝的扫一扫</a>
+    <br>
+    <!-- 打开支付宝的蚂蚁森林 -->
+    <a href="alipays://platformapi/startapp?appId=60000002">打开支付宝的蚂蚁森林</a>
+    <br>
+</div>
+<hr>
+<div class="label">若接口返回字段包含\n或<br></div>
+
+
+<div class="modal">
+    测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；测试在打开的弹框中滚动会不会导致页面跟着滚动；
+
+    作者：JowayYoung
+    链接：https://juejin.cn/post/6921886428158754829
+    来源：掘金
+    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    <button id="close">关闭弹框</button>
+
+
+</div>
+
+<script>
+    const body = document.body;
+    const openBtn = document.getElementById('open')
+    const closeBtn = document.getElementById('close')
+    const modal = document.getElementsByClassName('modal')[0]
+    openBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        modal.classList.add('show')
+        /*TODO 阻止页面滚动*/
+        document.scrollingElement.style.height = '100vh';
+        document.scrollingElement.style.overflow = 'hidden';
+        
+    })
+    closeBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        modal.classList.remove('show')
+        document.scrollingElement.style.height = 'auto';
+        document.scrollingElement.style.overflow = 'auto';
+    })
+
+
+    /**
+     * 手写一个浅拷贝
+     * 1、对基础类型做一个最基本的一个拷贝
+     * 2、对引用类型开辟一个新的存储，并且拷贝一层对象属性
+     * @param target
+     * @returns {Array|*}
+     */
+    const shallowClone = (target) => {
+        // 判断是否是引用类型
+        if(typeof target === 'object' && typeof target !== null) {
+            const cloneTarget = Array.isArray(target) ? [] : {};
+            for (let prop in target) {
+                if (target.hasOwnProperty(prop)) {
+                    cloneTarget[prop] = target[prop]
+                }
+            }
+            return cloneTarget
+        }else {
+            return target
+        }
+    }
+
+
+    const deepClone = (target) => {
+        let cloneObj = {};
+        for(let key in target) {
+            if(typeof target[key] === 'object') {
+                cloneObj[key] = deepClone(target[key])
+            }else {
+                cloneObj[key] = target[key]
+            }
+        }
+        return cloneObj
+    }
+
+
+
+
+    function _new(constor, ...agrs) {
+        let obj = {};
+        obj.__proto__ = constor.prototype;
+        let result = constor.apply(obj, agrs);
+        let isObj = typeof result === 'object' && result !== null;
+        let isFun = typeof result === 'function';
+        return isObj || isFun ? result : obj
+    }
+
+    function CreateObj(name, s) {
+        this.name = name;
+        this.age = 10;
+        this.say = function () {
+            console.log(`${s}: ${this.name}`)
+        }
+        // return () => {}
+    }
+
+    let obj1 = _new(CreateObj, 'Youngwell', 'Hi')
+
+</script>
+</body>
+</html>

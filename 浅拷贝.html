@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function shallowClone(target) {
+            if(typeof target === 'object' && target !== null) {
+                let clone = Array.isArray(target) ? [] : {};
+                for(let key in target) {
+                    if(target.hasOwnProperty(key)) {
+                        clone[key] = target[key]
+                    }
+                }
+                return clone;
+            }else {
+                return target;
+            }
+        }
+        var arr = [1,4,6,8,90, {a: 5}]
+        var obj = {a: 10,b:435,name: 'yyy'}
+        var arr2 = shallowClone(arr)
+        var obj2 = shallowClone(obj)
+    </script>
+</body>
+</html>

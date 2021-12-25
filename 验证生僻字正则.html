@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+    function utf8ToUtf16(h, l) {
+        var sum  =   ((h  - 0xD800) * 0x400  +   (l - 0xDC00))  +  0x10000;
+        return sum;
+    };
+    function checkCode(val, minLen = 2, maxLen = 20)  {
+        // debugger
+        var len  =  val.length;
+        var lenRel  =  len;
+        var i  =  0;
+        while (i < len) {
+            var h  =  val.charCodeAt(i); i++;
+            /*验证是否是汉字，包括生僻字*/
+            if  ((h  >=  0x3400  &&  h  <=  0x4DB5)  ||   (h  >=  0x4E00  &&  h  <= 0x9FA5) || (h >= 0xF900 && h <= 0xFAD9) || (h >= 0x2F00 && h <= 0x2FD5) || (h  >=  0x3400  &&  h  <=  0x4DB5))  {
+
+            }else if  (h  >=  0xD800  && h <= 0xDBFF) {
+                var l  =  val.charCodeAt(i); i++;
+                lenRel--;
+                var utf16  =  utf8ToUtf16(h, l);
+                if (! (utf16  >=  0x20000  &&  utf16 <= 0x2A6D6) && !(utf16  >=  0x2A700  &&  utf16 <= 0x2B734) && !(utf16  >=  0x2B740  &&  utf16 <= 0x2B81D) && !(utf16  >=  0x2F800  &&  utf16 <= 0x2FA1D) && !(utf16  >=  0x30000  &&  utf16 <= 0x3134A) && !(utf16  >=  0x2B820  &&  utf16 <= 0x2CEA1) && !(utf16  >=  0x2CEB0  &&  utf16 <= 0x2EBE0)) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        return lenRel >= minLen && lenRel <=maxLen;
+    }
+    console.log(checkCode('䶮多3',1))
+</script>
+</body>
+</html>

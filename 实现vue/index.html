@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实现一个vue</title>
+</head>
+<body>
+
+<div id="app">
+    <i>插值表达式</i> <br> <br>
+    {{msg}}
+    <h1>msg: {{msg}}</h1>
+    <h2>{{count}}</h2>
+
+    <i>指令 v-text</i>
+    <p v-text="msg">fdasfs</p>
+
+    <h1>{{desc.name}}</h1>
+</div>
+
+<script src="./observer.js"></script>
+<script src="./compiler.js"></script>
+<script src="./vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello World',
+            count: 10,
+            desc: {
+                name: 'Youngwell',
+                age: 30
+            }
+        }
+    })
+    console.dir(document.getElementById('app'))
+    // vm.msg = {test: 'msg'}
+</script>
+</body>
+</html>

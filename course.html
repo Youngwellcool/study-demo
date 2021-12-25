@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .d1, .d2 {
+            width: 100px;
+            height: 100px;
+        }
+        .d1{
+            background-color: red;
+           margin: 30px;
+        }
+        .d2 {
+            background-color: blue;
+            margin: 50px;
+        }
+        .static {
+            height: 100px;
+            position: static;
+            left: 100px;
+            top: 100px;
+            background-color: #0099ff;
+            color: #fff;
+        }
+        .relative {
+            height: 100px;
+            position: relative;
+            left: 100px;
+            top: 50px;
+            background-color: black;
+            color: #fff;
+        }
+        .d5 {
+            height: 200px;
+            background-color: red;
+        }
+        .absolute {
+            position: absolute;
+            top: 200px;
+            left: 150px;
+            background-color: #33cc99;
+            height: 60px;
+        }
+
+
+        .div {
+            border: solid 1px red;
+            width: 50px;
+            height: 50px;
+        }
+        .float {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="d1">
+    <div class="d3"></div>
+</div>
+<div class="d2"></div>
+
+
+<h1>position</h1>
+<div class="static">static</div>
+<div class="relative">relative</div>
+<div class="d5"></div>
+<div class="absolute">absolute</div>
+
+
+
+<div class="div">1</div>
+<div class="float div">2</div>
+<div class="float div">3</div>
+<div class="div">4</div>
+<div class="div">5</div>
+<div class="float div">6</div>
+<div>
+    <div class="float div"></div>
+</div>
+</body>
+</html>

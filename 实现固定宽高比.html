@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css">
+    <style>
+        /* https://wangyaxing.cn/blog/interview/CSS/%E5%AE%9E%E7%8E%B0%E5%9B%BA%E5%AE%9A%E5%AE%BD%E9%AB%98%E6%AF%94%E7%9A%84div.html
+        /* 16:9宽高比，则设padding-bottom:56.25% */
+        /* height: 0px, 防止矩形被里面的内容撑出多余的高度*/
+        /* 利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！ */
+    
+        .div {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            background-color: #f00;
+            overflow: hidden;
+        }
+        .flex {
+            display: flex;
+            /* flex-wrap: wrap; */
+            justify-content: space-between;
+            align-items: center;
+            align-content: space-around;
+            height: 400px;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+        .flex span {
+            /* width: 100px; */
+            height: 30px;
+            background-color: #00f;
+            border: 1px solid #0f0;
+            flex-grow: 1;
+            flex-shrink: 0;
+        }
+
+        .wrap {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+        .center {
+            width: 100px;
+            height: 50px;
+            background-color: #f00;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            
+        }
+        .left-a {
+            float: left;
+            width: 100%;
+        }
+        .left {
+            height: 200px;
+            background-color: #00f;
+            word-break: break-all;
+        }
+        .right {
+            float: right;
+            width: 100px;
+            height: 300px;
+            margin-left: -100px;;
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="div">
+利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！利用将padding-top或padding-bottom设置成百分比，来实现高度满足宽度的某个比例。因为，当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的！
+    </div>
+
+    <div class="flex">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="wrap">
+        <div class="center"></div>
+    </div>
+
+    <div class="left-a">
+        <div class="left">frtefesfsadfdsafsdaffrtefesfsadfdsafsdaffrtefesfsadfdsafsdaffrtefesfsadfdsafsdaffrtefesfsadfdsafsdaf</div>
+    </div>
+    
+    <div class="right">675675</div>
+
+    <div class="ac">546757657657657877</div>
+    <div id="parent" v-text="msg">
+        <h3 class="pre">发堵塞物同仁堂</h3>
+        <h3 class="next">yyyyyyyyy</h3>
+
+    </div>
+
+    <script>
+        var parent = document.getElementById('parent')
+        console.dir(parent)
+        parent.insertBefore(document.getElementsByClassName('ac')[0], document.getElementsByClassName('next')[0])
+
+        var obj = {}
+        var _obj = {name: 'y', age: 30, height: 170}
+        Object.keys(_obj).forEach(key => {
+            Object.defineProperty(obj, key, {
+                configurable: true,
+                enumerable: true,
+                get() {
+                    console.log(`获取${key}的值`)
+                    return _obj[key]
+                },
+                set(val) {
+                    console.log(`设置${key}的值`)
+                    if(val === _obj[key]) return;
+                    _obj[key] = val;
+                }
+            })
+        })
+
+        console.log(obj)
+
+        var arr = [1,2], _arr = new Array(2);
+
+        var p1 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('p1')
+            }, 1000);
+        }) 
+        var p2 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('p2')
+            }, 2000);
+        }) 
+        var p3 = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('p3')
+            }, 3000);
+        }) 
+
+        var p4 = new Promise((resolve, reject) => {
+            p1.then(res1 => {
+            for(let i = 0; i < arr.length; i++) {
+                p2.then(res2 => {
+                    _arr[i] = new Promise((_resolve, _reject) => {
+                        p3.then(res3 => {
+                            
+                            console.log(new Date().getTime())
+                            _resolve('p' + i)
+                            
+                        })
+                        
+                    }) 
+
+                    console.log(_arr)
+                    Promise.all(_arr).then(res => {
+                        console.log(new Date().getTime())
+                        console.log(res)
+                        resolve(res)
+                    })
+                })
+            }
+
+            
+        })
+        }) 
+
+        p4.then(res => {
+            console.log(res)
+        })
+        
+
+        
+        
+
+        // _arr[1] = new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         resolve('p2')
+        //     }, 3000);
+        // }) 
+
+        
+
+
+    </script>
+</body>
+</html>

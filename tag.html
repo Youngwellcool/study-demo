@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>处理标签</title>
+</head>
+<body>
+
+<script>
+    var str = '#测试标签1 发生大 师傅#dsfdf #youngwell #youngwell 范德萨范 德萨搭嘎士 大夫#rtyrthg 打算 '
+    var strArr = ['#测试标签1 ', '发生大师傅', '#dsfdf ', '#youngwell ', '#youngwell ', '范德萨范德萨搭嘎士大夫', '#rtyrthg ', '打算']
+
+    // [0, 6]  [1, 7]
+    var reg = /^#[\s\S\d\D\w\W]*\s/i;
+    var arr = ['#测试标签1 ', '#dsfdf ', '#youngwell ', '#youngwell ', '#rtyrthg ']
+    console.log(reg.test(str))
+    var arr_ = str.split(reg)
+    console.log(arr_)
+
+    function fun(str) {
+        let arr = str.split(' ')
+        console.log(arr)
+        let arr_ = []
+        arr.forEach(item => {
+            let i = item.indexOf('#');
+            console.log(i)
+            if(i != -1 && i != 0) {
+                item = item.split('#')
+                item[1] = `#${item[1]}`
+                console.log(item)
+                console.log(arr)
+            }
+            arr_.push(item)
+        })
+
+
+
+        return arr_.flat(Infinity)
+    }
+
+    console.log(fun(str))
+
+
+
+    function fun1() {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                console.log('fun1')
+                resolve('fun1 resolve')
+            }, 2000)
+        })
+    }
+
+     function fun2() {
+        setTimeout(async () => {
+            let a = await fun1()
+            console.log(a)
+            console.log('fun2')
+        }, 1000)
+
+    }
+
+    fun2()
+
+</script>
+
+</body>
+</html>

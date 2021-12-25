@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text">
+<script>
+    /**
+     * @name: 防抖函数
+     * @description: 在事件触发n秒后，才执行函数  1、每次触发事件时都要把之前的定时器取消   2、返回一个函数
+     * @author: Youngwell
+     * @time: 2021-10-08 15:01:57
+     * @param
+     */
+    function debounce(fn, wait, immediate) {
+        let timer = null;
+        return function (...args) {
+            // console.log(args)
+            clearTimeout(timer)
+            if(immediate && !timer) {
+                fn.apply(this, args)
+            }
+            timer = setTimeout(() => {
+                fn.apply(this, args)
+            }, wait)
+        }
+    }
+
+    function fn(a, b) {
+        console.log(a)
+        console.log(b)
+    }
+    function inputHandler(e) {
+        console.log(e)
+        console.log(e.data)
+        console.log(input.value)
+    }
+    console.log(debounce(fn, 1000, false))
+    window.addEventListener('resize', debounce(function () {
+        fn('a', 'b')
+    }, 2000))
+
+
+    let input = document.getElementsByTagName('input')[0];
+    input.addEventListener('input', debounce(inputHandler, 1000))
+</script>
+</body>
+</html>

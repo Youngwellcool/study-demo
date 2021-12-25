@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        Function.prototype.myCall = function(thisArg = window) {
+            thisArg.fn = this; // 给thisArg挂上fn方法，赋值为myCall方法的调用者foo
+            console.log(this)  // 对于下例，this为foo函数
+            let arg = [...arguments].slice(1) // 第一个参数为this，所以要去掉第一个元素，才是传入函数foo执行的真正的参数
+            let result = thisArg.fn(...arg)  // 执行函数foo
+            delete thisArg.fn // 因为thisArg上没有fn属性，所以要删除
+            return result;
+        }
+        function foo(a, b) {
+            console.log(this.name)  // obj.name   yww
+            console.log(a) // aa
+            console.log(b)  // bb
+        }
+        var obj = {
+            name: 'yww'
+        }
+        foo.myCall(obj, 'aa', 'bb')
+
+
+        Function.prototype.myApply = function(thisArg) {
+            thisArg.fn = this; // 给thisArg挂上fn方法，赋值为myCall方法的调用者foo
+            console.log(this)  // 对于下例，this为foo函数
+            let result;
+            if(arguments[1]) {  // 判断是否有第二个参数
+                result = thisArg.fn(...arguments[1])  // 第二个参数是数组格式，执行函数foo
+            }else {
+                result = thisArg.fn()
+            }
+            delete thisArg.fn // 因为thisArg上没有fn属性，所以要删除
+            return result;
+        }
+
+        Function.prototype._apply = function(context, args) {
+            context = context || window;
+            context.fn = this;
+            let result;
+            if(args) {
+                result = eval('context.fn(...args)')
+            }else {
+                result = eval('context.fn()')
+            }
+            delete context.fn;
+            return result
+        }
+
+    </script>
+</body>
+</html>

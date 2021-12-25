@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打乱数组</title>
+</head>
+<body>
+
+<script>
+    var Solution = function (arr) {
+        this.originArr = [...arr];
+        this.shuffleArr = [...arr];
+    }
+    Solution.prototype.reset = function () {
+        return this.originArr;
+    }
+    /**
+     * 洗牌算法：从最后一个元素开始，从数组中随机选出一个位置，交换，直到第一个元素。
+     * @returns {Solution.shuffleArr}
+     */
+    Solution.prototype.shuffle = function () {
+        const { shuffleArr } = this;
+        let current = shuffleArr.length - 1;
+        while (current > 0) {
+            // 从数组中随机选出一个位置
+            let random = Math.floor(shuffleArr.length * Math.random());
+            // 交换
+            [shuffleArr[current], shuffleArr[random]] = [shuffleArr[random], shuffleArr[current]];
+            current--;
+        }
+        return shuffleArr
+    }
+
+    var obj = new Solution([1,2,3,4,5,6,7,8])
+    console.log(JSON.stringify(obj))
+    console.log(obj.shuffle())
+    console.log(obj)
+    console.log(obj.reset())
+
+
+    function lottery(arr, n) {
+        let result = [], i = 1;
+        while (i <= n) {
+            result.push(arr.splice(Math.floor(arr.length * Math.random()), 1)[0])
+            i++
+        }
+        console.log(result)
+        return result
+    }
+
+    lottery([1,2,3,4,5,6,7,8], 3)
+</script>
+</body>
+</html>
